@@ -30,6 +30,7 @@ router.post('/', [
         });
         
         return res.json(user);
+    //catch any error and send a message using try - catch
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server error" });
