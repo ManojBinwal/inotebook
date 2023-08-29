@@ -6,7 +6,7 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 const JWT_SECRET = 'dfadfdsfsdfsddsnfsd3232'
 
-// Creating a User using: POST "/api/auth/" Doesn't require auth
+//Route1 - Creating a User using: POST "/api/auth/" Doesn't require auth
 router.post('/createuser', [
     body('email', 'Enter a valid E-mail').isEmail(),
     body('name', 'Enter a valid name').isLength({ min: 3 }),
@@ -43,7 +43,6 @@ router.post('/createuser', [
         }
         //generate a token by sending data and secret to jwt 
         const authToken = jwt.sign(data, JWT_SECRET);
-
         return res.json({ authToken });
 
         //catch any error and send a message using try - catch
@@ -53,8 +52,8 @@ router.post('/createuser', [
     }
 });
 
-//authenticate a user using: POST "/api/auth/login". No login required
-router.post('/', [
+//Route2: Login Authenticate a user using: POST "/api/auth/login". No login required
+router.post('/login', [
     body('email', 'Enter a valid E-mail').isEmail(),
     body('password', 'password cannot be blank').exists(),
 ], async (req, res) => {
@@ -67,12 +66,12 @@ router.post('/', [
 
     const { email, password } = req.body;
     try {
-        let user = User.findOne({ email });
+        let user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ error: "Please try to login with correct credentials" });
         }
 
-        const passwordCompare = bcrypt.compare(password, user.password);
+        const passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
             return res.status(400).json({ error: "Please try to login with correct credentials" });
         }
@@ -82,7 +81,7 @@ router.post('/', [
                 id: user.id
             }
         }
-        const authToken = jwt.sign(data, JWT_SECRET);
+        const authToken = jwt.sign(payload, JWT_SECRET);
         res.json({ authToken });
 
     } catch (error) {
