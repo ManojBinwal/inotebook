@@ -7,9 +7,9 @@ const NoteState = (props) => {
         "class": "5b"
     }
     return (
-        <NoteState.provider value={state}>
+        <NoteContext.provider value={state}>
             {props.children}
-        </NoteState.provider>
+        </NoteContext.provider>
     )
 }
 
