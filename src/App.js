@@ -8,17 +8,19 @@ import NoteState from "./context/notes/NoteState";
 function App() {
   return (
     <>
-    <NoteState>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          {/* provide unique key inside component to remount on changing categories */}
-          <Route exact path="/" element=<Home key="home"/> />
-          <Route exact path="/about" element=<About key="about"/> />
-        </Routes>
+      <NoteState>
+        <BrowserRouter>
+          <Navbar />
+          <div className="container">
+            <Routes>
+              {/* provide unique key inside component to remount on changing categories */}
+              <Route exact path="/" element=<Home key="home" /> />
+              <Route exact path="/about" element=<About key="about" /> />
+            </Routes>
+          </div>
 
 
-      </BrowserRouter>
+        </BrowserRouter>
       </NoteState>
     </>
   );
