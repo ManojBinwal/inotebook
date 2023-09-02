@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home'
 import About from './components/About'
 import NoteState from "./context/notes/NoteState";
+import Alert from "./components/Alert";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <NoteState>
         <BrowserRouter>
           <Navbar />
+          <Alert message={"this is amazing notes app"}/>
           <div className="container">
             <Routes>
               {/* provide unique key inside component to remount on changing categories */}
